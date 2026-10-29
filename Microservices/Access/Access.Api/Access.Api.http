@@ -1,7 +1,74 @@
 @Access.Api_HostAddress = http://localhost:5296
 
+# Copie aquí los IDs que devuelven las peticiones para probar las siguientes.
+@areaId = 00000000-0000-0000-0000-000000000000
+@employeeId = 00000000-0000-0000-0000-000000000000
+
 ### Documento OpenAPI con todos los endpoints de la API
 GET {{Access.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+### Áreas organizacionales
+GET {{Access.Api_HostAddress}}/api/areas
+Accept: application/json
+
+### RF-01: Registrar empleado
+POST {{Access.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "documentNumber": "1036123456",
+  "firstName": "Ana María",
+  "lastName": "Gómez Ruiz",
+  "email": "ana.gomez@empresa.com",
+  "position": "Auxiliar de bodega",
+  "areaId": "{{areaId}}"
+}
+
+### RF-01: Registrar empleado con identificación repetida (debe fallar)
+POST {{Access.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "documentNumber": "1036123456",
+  "firstName": "Carlos",
+  "lastName": "Pérez",
+  "email": "carlos.perez@empresa.com",
+  "position": "Vigilante",
+  "areaId": "{{areaId}}"
+}
+
+### RF-01: Listar empleados (paginado, con filtros opcionales areaId y status)
+GET {{Access.Api_HostAddress}}/api/employees?pageNumber=1&pageSize=10
+Accept: application/json
+
+### RF-01: Listar solo empleados activos
+GET {{Access.Api_HostAddress}}/api/employees?status=Active
+Accept: application/json
+
+### RF-01: Paginación inválida (debe fallar)
+GET {{Access.Api_HostAddress}}/api/employees?pageSize=-5
+Accept: application/json
+
+### RF-01: Consultar empleado por ID
+GET {{Access.Api_HostAddress}}/api/employees/{{employeeId}}
+Accept: application/json
+
+### RF-01: Actualizar empleado
+PUT {{Access.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "id": "{{employeeId}}",
+  "firstName": "Ana María",
+  "lastName": "Gómez Ruiz",
+  "email": "ana.gomez@empresa.com",
+  "position": "Coordinadora de bodega",
+  "areaId": "{{areaId}}"
+}
+
+### RF-01: Desactivar empleado
+PATCH {{Access.Api_HostAddress}}/api/employees/{{employeeId}}/deactivate
 Accept: application/json
 
 ###
