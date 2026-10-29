@@ -1,6 +1,7 @@
 @Access.Api_HostAddress = http://localhost:5296
 
-GET {{Access.Api_HostAddress}}/weatherforecast/
+### Documento OpenAPI con todos los endpoints de la API
+GET {{Access.Api_HostAddress}}/openapi/v1.json
 Accept: application/json
 
 ###

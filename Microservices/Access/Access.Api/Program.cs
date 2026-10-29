@@ -1,5 +1,6 @@
 using Access.Application;
 using Access.Persistence;
+using Access.Persistence.Seeds;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+await DataBaseSeeder.SeedAsync(app.Services);
 
 app.UseHttpsRedirection();
 
