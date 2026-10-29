@@ -1,6 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Access.Application.UseCases.AccessPoints.Commands.CreateAccessPoint;
+using Access.Application.UseCases.AccessPoints.Commands.DisableAccessPoint;
+using Access.Application.UseCases.AccessPoints.Commands.EnableAccessPoint;
+using Access.Application.UseCases.AccessPoints.Queries.GetAccessPointById;
+using Access.Application.UseCases.AccessPoints.Queries.GetAccessPointsList;
 using Access.Application.UseCases.Areas.Queries.GetAreasList;
+using Access.Application.UseCases.Credentials.Commands.AssignCredential;
+using Access.Application.UseCases.Credentials.Commands.BlockCredential;
+using Access.Application.UseCases.Credentials.Commands.RevokeCredential;
+using Access.Application.UseCases.Credentials.Queries.GetCredentialByCode;
+using Access.Application.UseCases.Credentials.Queries.GetCredentialsByEmployee;
 using Access.Application.UseCases.Employees.Commands.CreateEmployee;
 using Access.Application.UseCases.Employees.Commands.DeactivateEmployee;
 using Access.Application.UseCases.Employees.Commands.UpdateEmployee;
@@ -31,6 +41,20 @@ namespace Access.Application
             services.AddScoped<IRequestHandler<DeactivateEmployeeCommand, Result<Guid>>, DeactivateEmployeeUseCase>();
             services.AddScoped<IRequestHandler<GetEmployeeByIdQuery, Result<EmployeeDetailsDTO>>, GetEmployeeByIdUseCase>();
             services.AddScoped<IRequestHandler<GetEmployeesListQuery, Result<PaginationResponse<EmployeeListItemDTO>>>, GetEmployeesListUseCase>();
+
+            // Use Cases - Credenciales (RF-02)
+            services.AddScoped<IRequestHandler<AssignCredentialCommand, Result<Guid>>, AssignCredentialUseCase>();
+            services.AddScoped<IRequestHandler<BlockCredentialCommand, Result<Guid>>, BlockCredentialUseCase>();
+            services.AddScoped<IRequestHandler<RevokeCredentialCommand, Result<Guid>>, RevokeCredentialUseCase>();
+            services.AddScoped<IRequestHandler<GetCredentialByCodeQuery, Result<CredentialDetailsDTO>>, GetCredentialByCodeUseCase>();
+            services.AddScoped<IRequestHandler<GetCredentialsByEmployeeQuery, Result<List<CredentialListItemDTO>>>, GetCredentialsByEmployeeUseCase>();
+
+            // Use Cases - Puntos de acceso (RF-06)
+            services.AddScoped<IRequestHandler<CreateAccessPointCommand, Result<Guid>>, CreateAccessPointUseCase>();
+            services.AddScoped<IRequestHandler<EnableAccessPointCommand, Result<Guid>>, EnableAccessPointUseCase>();
+            services.AddScoped<IRequestHandler<DisableAccessPointCommand, Result<Guid>>, DisableAccessPointUseCase>();
+            services.AddScoped<IRequestHandler<GetAccessPointByIdQuery, Result<AccessPointDetailsDTO>>, GetAccessPointByIdUseCase>();
+            services.AddScoped<IRequestHandler<GetAccessPointsListQuery, Result<PaginationResponse<AccessPointListItemDTO>>>, GetAccessPointsListUseCase>();
 
             // Validations
             services.AddValidatorsFromAssembly(typeof(ApplicationServicesRegistry).Assembly);

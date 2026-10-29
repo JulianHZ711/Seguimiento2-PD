@@ -3,6 +3,8 @@
 # Copie aquí los IDs que devuelven las peticiones para probar las siguientes.
 @areaId = 00000000-0000-0000-0000-000000000000
 @employeeId = 00000000-0000-0000-0000-000000000000
+@accessPointId = 00000000-0000-0000-0000-000000000000
+@credentialCode = EMP-0001
 
 ### Documento OpenAPI con todos los endpoints de la API
 GET {{Access.Api_HostAddress}}/openapi/v1.json
@@ -69,6 +71,70 @@ Content-Type: application/json
 
 ### RF-01: Desactivar empleado
 PATCH {{Access.Api_HostAddress}}/api/employees/{{employeeId}}/deactivate
+Accept: application/json
+
+### RF-06: Listar puntos de acceso (filtros opcionales isEnabled y type)
+GET {{Access.Api_HostAddress}}/api/access-points?pageNumber=1&pageSize=10
+Accept: application/json
+
+### RF-06: Listar solo puntos habilitados
+GET {{Access.Api_HostAddress}}/api/access-points?isEnabled=true
+Accept: application/json
+
+### RF-06: Registrar punto de acceso (type: 1 Recepción, 2 Parqueadero, 3 Bodega, 4 Área restringida)
+POST {{Access.Api_HostAddress}}/api/access-points
+Content-Type: application/json
+
+{
+  "name": "Bodega de químicos",
+  "type": 4,
+  "isEnabled": true
+}
+
+### RF-06: Consultar punto de acceso por ID
+GET {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}
+Accept: application/json
+
+### RF-06: Deshabilitar punto de acceso
+PATCH {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}/disable
+Accept: application/json
+
+### RF-06: Habilitar punto de acceso
+PATCH {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}/enable
+Accept: application/json
+
+### RF-02: Asignar credencial a un empleado activo
+POST {{Access.Api_HostAddress}}/api/credentials
+Content-Type: application/json
+
+{
+  "code": "{{credentialCode}}",
+  "employeeId": "{{employeeId}}"
+}
+
+### RF-02: Asignar una segunda credencial vigente (debe fallar)
+POST {{Access.Api_HostAddress}}/api/credentials
+Content-Type: application/json
+
+{
+  "code": "EMP-0002",
+  "employeeId": "{{employeeId}}"
+}
+
+### RF-02: Consultar estado de una credencial por código
+GET {{Access.Api_HostAddress}}/api/credentials/{{credentialCode}}
+Accept: application/json
+
+### RF-02: Credenciales de un empleado
+GET {{Access.Api_HostAddress}}/api/credentials/employee/{{employeeId}}
+Accept: application/json
+
+### RF-02: Bloquear credencial
+PATCH {{Access.Api_HostAddress}}/api/credentials/{{credentialCode}}/block
+Accept: application/json
+
+### RF-02: Revocar credencial
+PATCH {{Access.Api_HostAddress}}/api/credentials/{{credentialCode}}/revoke
 Accept: application/json
 
 ###

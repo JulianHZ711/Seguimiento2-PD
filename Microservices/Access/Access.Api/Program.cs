@@ -1,3 +1,4 @@
+using Access.Api.Middlewares;
 using Access.Application;
 using Access.Persistence;
 using Access.Persistence.Seeds;
@@ -11,6 +12,8 @@ builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 
 WebApplication app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
