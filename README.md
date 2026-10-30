@@ -1,4 +1,4 @@
-# SGCAE – Sistema de Gestión y Control de Acceso de Empleados
+# Sistema de Gestión y Control de Acceso de Empleados
 
 Backend con API REST para administrar empleados, credenciales y puntos de acceso, y para registrar y consultar las entradas y salidas de los empleados de una empresa de servicios logísticos y de almacenamiento.
 
