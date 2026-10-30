@@ -28,14 +28,6 @@ namespace Access.Persistence.Repositories
                                                    .FirstOrDefaultAsync(c => c.Code == normalizedCode, cancellationToken);
         }
 
-        public async Task<IEnumerable<Credential>> GetByEmployeeIdAsync(Guid employeeId, CancellationToken cancellationToken = default)
-        {
-            return await _context.Set<Credential>().Where(c => c.EmployeeId == employeeId)
-                                                   .OrderByDescending(c => c.CreatedAt)
-                                                   .ThenBy(c => c.Id)
-                                                   .ToListAsync(cancellationToken);
-        }
-
         public async Task<bool> ExistsByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
             string normalizedCode = NormalizeCode(code);

@@ -11,8 +11,6 @@ namespace Access.Application.Contracts.Repositories
 
         Task<Credential?> GetByCodeWithEmployeeAsync(string code, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<Credential>> GetByEmployeeIdAsync(Guid employeeId, CancellationToken cancellationToken = default);
-
         Task<bool> ExistsByCodeAsync(string code, CancellationToken cancellationToken = default);
     }
 }

@@ -25,8 +25,7 @@ namespace Access.Application.UseCases.AccessPoints.Queries.GetAccessPointsList
                 PaginationRequest pagination = query.Pagination;
 
                 PaginationResponse<AccessPoint> response = await _accessPointsRepository.GetPagedListAsync(pagination,
-                                                                                                          query.IsEnabled,
-                                                                                                          query.Type);
+                                                                                                          query.IsEnabled);
 
                 List<AccessPointListItemDTO> items = response.Items.Select(p => new AccessPointListItemDTO
                                                                    {

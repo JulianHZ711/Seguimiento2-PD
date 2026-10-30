@@ -2,7 +2,6 @@
 using Access.Application.Contracts.Repositories;
 using Access.Application.Utilities.Pagination;
 using Access.Domain.Entities.AccessPoints;
-using Access.Domain.Entities.AccessPoints.ValueObjects;
 using Access.Persistence.Extensions;
 
 namespace Access.Persistence.Repositories
@@ -18,7 +17,6 @@ namespace Access.Persistence.Repositories
 
         public async Task<PaginationResponse<AccessPoint>> GetPagedListAsync(PaginationRequest request,
                                                                              bool? isEnabled,
-                                                                             AccessPointType? type,
                                                                              CancellationToken cancellationToken = default)
         {
             IQueryable<AccessPoint> query = _context.Set<AccessPoint>().AsQueryable();
@@ -26,11 +24,6 @@ namespace Access.Persistence.Repositories
             if (isEnabled.HasValue)
             {
                 query = query.Where(p => p.IsEnabled == isEnabled);
-            }
-
-            if (type.HasValue)
-            {
-                query = query.Where(p => p.Type == type);
             }
 
             query = query.OrderBy(p => p.Name)

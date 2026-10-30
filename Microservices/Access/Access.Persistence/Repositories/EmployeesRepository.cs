@@ -23,23 +23,11 @@ namespace Access.Persistence.Repositories
         }
 
         public async Task<PaginationResponse<Employee>> GetPagedListAsync(PaginationRequest request,
-                                                                          Guid? areaId,
-                                                                          EmploymentStatus? status,
                                                                           CancellationToken cancellationToken = default)
         {
             IQueryable<Employee> query = _context.Set<Employee>()
                                                  .Include(e => e.Area)
                                                  .AsQueryable();
-
-            if (areaId.HasValue)
-            {
-                query = query.Where(e => e.AreaId == areaId);
-            }
-
-            if (status.HasValue)
-            {
-                query = query.Where(e => e.Status == status);
-            }
 
             query = query.OrderByDescending(e => e.CreatedAt)
                          .ThenBy(e => e.Id);

@@ -59,13 +59,5 @@ namespace Access.Persistence.Repositories
 
             return await query.ToPagedListAsync(request, cancellationToken);
         }
-
-        public async Task<AccessLog?> GetLastAuthorizedByEmployeeAsync(Guid employeeId, CancellationToken cancellationToken = default)
-        {
-            return await _context.Set<AccessLog>().Where(l => l.EmployeeId == employeeId && l.Result == AccessResult.Authorized)
-                                                  .OrderByDescending(l => l.OccurredAt)
-                                                  .ThenByDescending(l => l.Id)
-                                                  .FirstOrDefaultAsync(cancellationToken);
-        }
     }
 }

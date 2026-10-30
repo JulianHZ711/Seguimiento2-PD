@@ -16,8 +16,5 @@ namespace Access.Application.Contracts.Repositories
                                                               Guid? accessPointId,
                                                               AccessResult? result,
                                                               CancellationToken cancellationToken = default);
-
-        // Último movimiento autorizado del empleado, para validar que entrada y salida sean coherentes.
-        Task<AccessLog?> GetLastAuthorizedByEmployeeAsync(Guid employeeId, CancellationToken cancellationToken = default);
     }
 }

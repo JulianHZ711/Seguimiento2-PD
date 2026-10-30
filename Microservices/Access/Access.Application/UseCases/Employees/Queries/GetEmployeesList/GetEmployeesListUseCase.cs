@@ -24,9 +24,7 @@ namespace Access.Application.UseCases.Employees.Queries.GetEmployeesList
             {
                 PaginationRequest pagination = query.Pagination;
 
-                PaginationResponse<Employee> response = await _employeesRepository.GetPagedListAsync(pagination,
-                                                                                                    query.AreaId,
-                                                                                                    query.Status);
+                PaginationResponse<Employee> response = await _employeesRepository.GetPagedListAsync(pagination);
 
                 List<EmployeeListItemDTO> items = response.Items.Select(e => e.ToListItemDTO())
                                                                 .ToList();

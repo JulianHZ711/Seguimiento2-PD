@@ -1,7 +1,6 @@
 ﻿using Access.Application.Utilities.Mediator;
 using Access.Application.Utilities.Results;
 using Access.Application.Utilities.Pagination;
-using Access.Domain.Entities.AccessPoints.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +12,5 @@ namespace Access.Application.UseCases.AccessPoints.Queries.GetAccessPointsList
         public PaginationRequest Pagination { get; set; } = PaginationRequest.Standart();
 
         public bool? IsEnabled { get; set; }
-        public AccessPointType? Type { get; set; }
     }
 }
