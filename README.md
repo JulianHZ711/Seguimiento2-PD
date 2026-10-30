@@ -170,44 +170,44 @@ Capturas del funcionamiento de la API y de las pruebas, ubicadas en `docs/eviden
 
 ### Ejecución completa de la colección de Postman
 
-![Ejecución de la colección de Postman](docs/evidencias/01-postman-run-collection.png)
+![Ejecución de la colección de Postman](docs/evidencias/postman-run-collection.png)
 
 ### RF-01: Gestión de empleados
 
 | Registrar | Consultar |
 |---|---|
-| ![Registrar empleado](docs/evidencias/02-rf01-registrar-empleado.png) | ![Consultar empleados](docs/evidencias/03-rf01-consultar-empleados.png) |
+| ![Registrar empleado](docs/evidencias/registrar-empleado.png) | ![Consultar empleados](docs/evidencias/consultar-empleados.png) |
 
 | Actualizar | Desactivar |
 |---|---|
-| ![Actualizar empleado](docs/evidencias/04-rf01-actualizar-empleado.png) | ![Desactivar empleado](docs/evidencias/05-rf01-desactivar-empleado.png) |
+| ![Actualizar empleado](docs/evidencias/actualizar-empleado.png) | ![Desactivar empleado](docs/evidencias/desactivar-empleado.png) |
 
 ### RF-02: Gestión de credenciales
 
 | Asignar | Consultar estado | Bloquear y revocar |
 |---|---|---|
-| ![Asignar credencial](docs/evidencias/06-rf02-asignar-credencial.png) | ![Consultar credencial](docs/evidencias/07-rf02-consultar-credencial.png) | ![Bloquear y revocar credencial](docs/evidencias/08-rf02-bloquear-revocar-credencial.png) |
+| ![Asignar credencial](docs/evidencias/asignar-credencial.png) | ![Consultar credencial](docs/evidencias/consultar-credencial.png) | ![Bloquear y revocar credencial](docs/evidencias/bloquear-revocar-credencial.png) |
 
 ### RF-03: Registro de entradas y salidas
 
 | Acceso autorizado | Acceso rechazado |
 |---|---|
-| ![Acceso autorizado](docs/evidencias/09-rf03-acceso-autorizado.png) | ![Acceso rechazado](docs/evidencias/10-rf03-acceso-rechazado.png) |
+| ![Acceso autorizado](docs/evidencias/acceso-autorizado.png) | ![Acceso rechazado](docs/evidencias/acceso-rechazado.png) |
 
 ### RF-04: Historial de accesos
 
-![Historial de accesos con filtros y paginación](docs/evidencias/11-rf04-historial.png)
+![Historial de accesos con filtros y paginación](docs/evidencias/historial.png)
 
 ### RF-06: Puntos de acceso
 
 | Registrar | Consultar habilitados |
 |---|---|
-| ![Registrar punto de acceso](docs/evidencias/12-rf06-registrar-punto-acceso.png) | ![Consultar puntos habilitados](docs/evidencias/13-rf06-puntos-habilitados.png) |
+| ![Registrar punto de acceso](docs/evidencias/registrar-punto-acceso.png) | ![Consultar puntos habilitados](docs/evidencias/puntos-habilitados.png) |
 
 ### Pruebas unitarias
 
-![Resultado de dotnet test](docs/evidencias/14-dotnet-test.png)
+![Resultado de dotnet test](docs/evidencias/dotnet-test.png)
 
 ### Base de datos
 
-![Tablas y registros en SQL Server](docs/evidencias/15-base-de-datos.png)
+![Tablas y registros en SQL Server](docs/evidencias/base-de-datos.png)
