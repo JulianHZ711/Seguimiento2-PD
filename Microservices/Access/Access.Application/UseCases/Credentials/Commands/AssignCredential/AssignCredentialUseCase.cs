@@ -50,14 +50,6 @@ namespace Access.Application.UseCases.Credentials.Commands.AssignCredential
                     throw new BussinesRuleException($"Ya existe una credencial con el código {code}.");
                 }
 
-                // Un empleado solo puede tener una credencial vigente; la anterior debe bloquearse o revocarse primero.
-                IEnumerable<Credential> employeeCredentials = await _credentialsRepository.GetByEmployeeIdAsync(employee.Id);
-
-                if (employeeCredentials.Any(c => c.CanBeUsed))
-                {
-                    throw new BussinesRuleException("El empleado ya tiene una credencial vigente. Bloquéela o revóquela antes de asignar una nueva.");
-                }
-
                 Credential credential = new(code, employee.Id);
 
                 await _credentialsRepository.CreateAsync(credential);

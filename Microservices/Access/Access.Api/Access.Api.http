@@ -1,6 +1,7 @@
 @Access.Api_HostAddress = http://localhost:5296
 
-# Copie aquí los IDs que devuelven las peticiones para probar las siguientes.
+# Copie aquí los IDs para probar las peticiones.
+# areaId: consúltelo en SQL Server con  SELECT Id, Name FROM Areas
 @areaId = 00000000-0000-0000-0000-000000000000
 @employeeId = 00000000-0000-0000-0000-000000000000
 @accessPointId = 00000000-0000-0000-0000-000000000000
@@ -8,10 +9,6 @@
 
 ### Documento OpenAPI con todos los endpoints de la API
 GET {{Access.Api_HostAddress}}/openapi/v1.json
-Accept: application/json
-
-### Áreas organizacionales
-GET {{Access.Api_HostAddress}}/api/areas
 Accept: application/json
 
 ### RF-01: Registrar empleado
@@ -27,29 +24,8 @@ Content-Type: application/json
   "areaId": "{{areaId}}"
 }
 
-### RF-01: Registrar empleado con identificación repetida (debe fallar)
-POST {{Access.Api_HostAddress}}/api/employees
-Content-Type: application/json
-
-{
-  "documentNumber": "1036123456",
-  "firstName": "Carlos",
-  "lastName": "Pérez",
-  "email": "carlos.perez@empresa.com",
-  "position": "Vigilante",
-  "areaId": "{{areaId}}"
-}
-
-### RF-01: Listar empleados (paginado, con filtros opcionales areaId y status)
+### RF-01: Consultar empleados (paginado)
 GET {{Access.Api_HostAddress}}/api/employees?pageNumber=1&pageSize=10
-Accept: application/json
-
-### RF-01: Listar solo empleados activos
-GET {{Access.Api_HostAddress}}/api/employees?status=Active
-Accept: application/json
-
-### RF-01: Paginación inválida (debe fallar)
-GET {{Access.Api_HostAddress}}/api/employees?pageSize=-5
 Accept: application/json
 
 ### RF-01: Consultar empleado por ID
@@ -73,14 +49,6 @@ Content-Type: application/json
 PATCH {{Access.Api_HostAddress}}/api/employees/{{employeeId}}/deactivate
 Accept: application/json
 
-### RF-06: Listar puntos de acceso (filtros opcionales isEnabled y type)
-GET {{Access.Api_HostAddress}}/api/access-points?pageNumber=1&pageSize=10
-Accept: application/json
-
-### RF-06: Listar solo puntos habilitados
-GET {{Access.Api_HostAddress}}/api/access-points?isEnabled=true
-Accept: application/json
-
 ### RF-06: Registrar punto de acceso (type: 1 Recepción, 2 Parqueadero, 3 Bodega, 4 Área restringida)
 POST {{Access.Api_HostAddress}}/api/access-points
 Content-Type: application/json
@@ -91,19 +59,19 @@ Content-Type: application/json
   "isEnabled": true
 }
 
+### RF-06: Consultar puntos de acceso
+GET {{Access.Api_HostAddress}}/api/access-points?pageNumber=1&pageSize=10
+Accept: application/json
+
+### RF-06: Consultar solo puntos habilitados
+GET {{Access.Api_HostAddress}}/api/access-points?isEnabled=true
+Accept: application/json
+
 ### RF-06: Consultar punto de acceso por ID
 GET {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}
 Accept: application/json
 
-### RF-06: Deshabilitar punto de acceso
-PATCH {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}/disable
-Accept: application/json
-
-### RF-06: Habilitar punto de acceso
-PATCH {{Access.Api_HostAddress}}/api/access-points/{{accessPointId}}/enable
-Accept: application/json
-
-### RF-02: Asignar credencial a un empleado activo
+### RF-02: Asignar credencial
 POST {{Access.Api_HostAddress}}/api/credentials
 Content-Type: application/json
 
@@ -112,21 +80,8 @@ Content-Type: application/json
   "employeeId": "{{employeeId}}"
 }
 
-### RF-02: Asignar una segunda credencial vigente (debe fallar)
-POST {{Access.Api_HostAddress}}/api/credentials
-Content-Type: application/json
-
-{
-  "code": "EMP-0002",
-  "employeeId": "{{employeeId}}"
-}
-
-### RF-02: Consultar estado de una credencial por código
+### RF-02: Consultar estado de una credencial
 GET {{Access.Api_HostAddress}}/api/credentials/{{credentialCode}}
-Accept: application/json
-
-### RF-02: Credenciales de un empleado
-GET {{Access.Api_HostAddress}}/api/credentials/employee/{{employeeId}}
 Accept: application/json
 
 ### RF-02: Bloquear credencial
@@ -135,6 +90,56 @@ Accept: application/json
 
 ### RF-02: Revocar credencial
 PATCH {{Access.Api_HostAddress}}/api/credentials/{{credentialCode}}/revoke
+Accept: application/json
+
+### RF-03: Registrar entrada (movementType: 1 Entrada, 2 Salida)
+POST {{Access.Api_HostAddress}}/api/access
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "{{accessPointId}}",
+  "movementType": 1
+}
+
+### RF-03: Registrar salida
+POST {{Access.Api_HostAddress}}/api/access
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "{{accessPointId}}",
+  "movementType": 2
+}
+
+### RF-03: Credencial inexistente (queda registrado como rechazado)
+POST {{Access.Api_HostAddress}}/api/access
+Content-Type: application/json
+
+{
+  "credentialCode": "NO-EXISTE-999",
+  "accessPointId": "{{accessPointId}}",
+  "movementType": 1
+}
+
+### RF-04: Historial (paginado)
+GET {{Access.Api_HostAddress}}/api/access/history?pageNumber=1&pageSize=10
+Accept: application/json
+
+### RF-04: Historial por empleado
+GET {{Access.Api_HostAddress}}/api/access/history?employeeId={{employeeId}}
+Accept: application/json
+
+### RF-04: Historial por rango de fechas (UTC)
+GET {{Access.Api_HostAddress}}/api/access/history?from=2026-01-01&to=2026-12-31
+Accept: application/json
+
+### RF-04: Historial por punto de acceso
+GET {{Access.Api_HostAddress}}/api/access/history?accessPointId={{accessPointId}}
+Accept: application/json
+
+### RF-04: Historial por resultado de validación
+GET {{Access.Api_HostAddress}}/api/access/history?result=Rejected
 Accept: application/json
 
 ###

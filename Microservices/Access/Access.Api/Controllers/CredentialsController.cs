@@ -5,7 +5,6 @@ using Access.Application.UseCases.Credentials.Commands.AssignCredential;
 using Access.Application.UseCases.Credentials.Commands.BlockCredential;
 using Access.Application.UseCases.Credentials.Commands.RevokeCredential;
 using Access.Application.UseCases.Credentials.Queries.GetCredentialByCode;
-using Access.Application.UseCases.Credentials.Queries.GetCredentialsByEmployee;
 using Access.Application.Utilities.Mediator;
 using Access.Application.Utilities.Results;
 
@@ -30,19 +29,6 @@ namespace Access.Api.Controllers
             };
 
             Result<CredentialDetailsDTO> result = await _mediator.Send(query);
-
-            return ToActionResult(result);
-        }
-
-        [HttpGet("employee/{employeeId}")]
-        public async Task<IActionResult> GetByEmployee([FromRoute] Guid employeeId)
-        {
-            GetCredentialsByEmployeeQuery query = new()
-            {
-                EmployeeId = employeeId
-            };
-
-            Result<List<CredentialListItemDTO>> result = await _mediator.Send(query);
 
             return ToActionResult(result);
         }

@@ -10,8 +10,6 @@ namespace Access.Application.Contracts.Repositories
     public interface IEmployeesRepository : IRepository<Employee>
     {
         Task<PaginationResponse<Employee>> GetPagedListAsync(PaginationRequest request,
-                                                             Guid? areaId,
-                                                             EmploymentStatus? status,
                                                              CancellationToken cancellationToken = default);
 
         Task<Employee?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default);

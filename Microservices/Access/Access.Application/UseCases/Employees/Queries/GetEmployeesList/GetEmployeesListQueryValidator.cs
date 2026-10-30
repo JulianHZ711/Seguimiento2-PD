@@ -11,8 +11,6 @@ namespace Access.Application.UseCases.Employees.Queries.GetEmployeesList
         public GetEmployeesListQueryValidator()
         {
             RuleFor(query => query.Pagination).SetValidator(new PaginationRequestValidator());
-
-            RuleFor(query => query.Status).IsInEnum().WithMessage("El estado laboral no es válido.");
         }
     }
 }

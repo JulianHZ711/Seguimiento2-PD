@@ -9,7 +9,6 @@ using Access.Application.UseCases.Employees.Queries.GetEmployeesList;
 using Access.Application.Utilities.Mediator;
 using Access.Application.Utilities.Pagination;
 using Access.Application.Utilities.Results;
-using Access.Domain.Entities.Employees.ValueObjects;
 
 namespace Access.Api.Controllers
 {
@@ -25,15 +24,11 @@ namespace Access.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1,
-                                                 [FromQuery] int pageSize = PaginationRequest.DEFAULT_PAGE_SIZE,
-                                                 [FromQuery] Guid? areaId = null,
-                                                 [FromQuery] EmploymentStatus? status = null)
+                                                 [FromQuery] int pageSize = PaginationRequest.DEFAULT_PAGE_SIZE)
         {
             GetEmployeesListQuery query = new()
             {
-                Pagination = new PaginationRequest(pageNumber, pageSize),
-                AreaId = areaId,
-                Status = status
+                Pagination = new PaginationRequest(pageNumber, pageSize)
             };
 
             Result<PaginationResponse<EmployeeListItemDTO>> result = await _mediator.Send(query);

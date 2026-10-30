@@ -2,14 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Access.Api.DTOs.AccessPoints;
 using Access.Application.UseCases.AccessPoints.Commands.CreateAccessPoint;
-using Access.Application.UseCases.AccessPoints.Commands.DisableAccessPoint;
-using Access.Application.UseCases.AccessPoints.Commands.EnableAccessPoint;
 using Access.Application.UseCases.AccessPoints.Queries.GetAccessPointById;
 using Access.Application.UseCases.AccessPoints.Queries.GetAccessPointsList;
 using Access.Application.Utilities.Mediator;
 using Access.Application.Utilities.Pagination;
 using Access.Application.Utilities.Results;
-using Access.Domain.Entities.AccessPoints.ValueObjects;
 
 namespace Access.Api.Controllers
 {
@@ -26,14 +23,12 @@ namespace Access.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1,
                                                  [FromQuery] int pageSize = PaginationRequest.DEFAULT_PAGE_SIZE,
-                                                 [FromQuery] bool? isEnabled = null,
-                                                 [FromQuery] AccessPointType? type = null)
+                                                 [FromQuery] bool? isEnabled = null)
         {
             GetAccessPointsListQuery query = new()
             {
                 Pagination = new PaginationRequest(pageNumber, pageSize),
-                IsEnabled = isEnabled,
-                Type = type
+                IsEnabled = isEnabled
             };
 
             Result<PaginationResponse<AccessPointListItemDTO>> result = await _mediator.Send(query);
@@ -67,22 +62,6 @@ namespace Access.Api.Controllers
             Result<Guid> result = await _mediator.Send(command);
 
             return ToActionResult(result, StatusCodes.Status201Created);
-        }
-
-        [HttpPatch("{id}/enable")]
-        public async Task<IActionResult> Enable([FromRoute] Guid id)
-        {
-            Result<Guid> result = await _mediator.Send(new EnableAccessPointCommand { Id = id });
-
-            return ToActionResult(result);
-        }
-
-        [HttpPatch("{id}/disable")]
-        public async Task<IActionResult> Disable([FromRoute] Guid id)
-        {
-            Result<Guid> result = await _mediator.Send(new DisableAccessPointCommand { Id = id });
-
-            return ToActionResult(result);
         }
     }
 }
