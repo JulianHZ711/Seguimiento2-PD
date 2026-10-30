@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "d3b908d4-ab40-4ddb-b356-b6217d34e724",
     "name": "S2PDColeccion",
-    "description": "Pruebas de la API del Seguimiento 2 (SGCAE). Antes de ejecutar, pegue en la variable areaId un Id de la tabla Areas (SELECT Id, Name FROM Areas). Ejecute las carpetas en orden: los demás IDs se guardan solos.",
+    "description": "Pruebas de la API del Seguimiento 2. Antes de ejecutar, pegue en la variable areaId un Id de la tabla Areas (SELECT Id, Name FROM Areas). Ejecute las carpetas en orden: los demás IDs se guardan solos.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
